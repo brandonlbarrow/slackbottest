@@ -4,8 +4,7 @@ from bot import SlackyBot
 
 APP = Flask(__name__)
 SLACK_TOKEN = os.environ.get('SLACK_BOT_TOKEN')
-BOT = (SlackyBot(SLACK_TOKEN)).slack_client
-BOT.rtm_connect
+BOT = SlackyBot(SLACK_TOKEN)
 
 @APP.route('/', methods=['GET'])
 def index():
@@ -15,7 +14,11 @@ def index():
 
 @APP.route('/hi', methods=['POST'])
 def hi():
-    print("Hello!")
+    print("SlackyBot says hello.")
+    BOT.say_hi(
+        request.form.get('channel_id'),
+        'Hello!'
+    )
     return Response(), 200
 
 
