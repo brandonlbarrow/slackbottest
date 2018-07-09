@@ -1,6 +1,6 @@
 import os
 from flask import Flask, Response, request, jsonify
-from bot import SlackyBot
+from slackybot import SlackyBot
 
 APP = Flask(__name__)
 SLACK_TOKEN = os.environ.get('SLACK_BOT_TOKEN')
