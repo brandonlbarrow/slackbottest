@@ -21,6 +21,13 @@ def hi():
     )
     return Response(), 200
 
+@APP.route('/instances', methods=['POST'])
+def get_instances():
+    print("Getting EC2 Instances")
+    BOT.get_instances(
+        request.form.get('channel_id'),
+    )
+    return Response(), 200
 
 if __name__ == "__main__":
     APP.run(debug=True)
