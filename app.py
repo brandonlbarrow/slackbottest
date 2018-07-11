@@ -19,10 +19,6 @@ def hi():
         request.form.get('channel_id'),
         'Hello!'
     )
-    BOT.rtm_say_hi(
-        request.form.get('channel_id'),
-        'RTM hello'
-    )
     return Response(), 200
 
 @APP.route('/instances', methods=['POST'])

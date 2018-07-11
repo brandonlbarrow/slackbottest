@@ -1,6 +1,6 @@
 import os
 import json
-from pprint import pprint
+import time
 from slackclient import SlackClient
 from slackybot_ec2.slackybot_ec2 import SlackyBotEC2
 
@@ -15,8 +15,6 @@ class SlackyBot:
         authenticated = self.slack_client.api_call('auth.test')
         if 'error' in authenticated and authenticated['error'] == 'invalid_auth':
             raise Exception('Authentication failed, please check your token and try again.')
-        
-        print(self.slack_client.rtm_connect(with_team_state=True))
         self.ec2_client = SlackyBotEC2(AWS_PROFILE)
         
 
@@ -27,14 +25,6 @@ class SlackyBot:
             text=message,
             username='slackybot',
             icon_emoji=':robot_face:'
-        )
-    
-    def rtm_say_hi(self, channel_id, message, mention_name=None):
-        read_data = self.slack_client.rtm_read()
-        print(read_data)
-        self.slack_client.rtm_send_message(
-            channel=channel_id,
-            message=message
         )
 
     def get_instances(self, channel_id, mention_name=None):
@@ -67,4 +57,3 @@ if __name__=="__main__":
     bot = SlackyBot(SLACK_TOKEN)
     print(bot.slack_client.api_call('auth.test'))
     print(bot.slack_client.api_call('channels.list'))
-    
