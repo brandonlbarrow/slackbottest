@@ -29,5 +29,19 @@ def get_instances():
     )
     return Response(), 200
 
+@APP.route('/listen', methods=['POST'])
+def listen():
+    if request.get_json().get('challenge'):
+        challenge = request.get_json().get('challenge')
+        return Response(challenge), 200
+    if request.get_json()['event']['type'] == 'app_mention':
+        BOT.say_hi(
+            request.get_json()['event']['channel'],
+            'How can I help?',
+            request.get_json()['event']['user']
+        )
+        return Response('mention success'), 200
+    return Response(), 200
+
 if __name__ == "__main__":
     APP.run(debug=True)
