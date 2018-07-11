@@ -34,12 +34,19 @@ def listen():
     if request.get_json().get('challenge'):
         challenge = request.get_json().get('challenge')
         return Response(challenge), 200
-    if request.get_json()['event']['type'] == 'app_mention':
+    if request.get_json()['event']['type'] == 'app_mention' and request.get_json()['event']['text'] == '<@UBKT752JV>':
         BOT.say_hi(
             request.get_json()['event']['channel'],
             'How can I help?',
             request.get_json()['event']['user']
         )
+        print(request.get_json())
+    if 'who am i' in request.get_json()['event']['text'].lower():
+        BOT.say_hi(
+            request.get_json()['event']['channel'],
+            "You are <@{}>.".format(request.get_json()['event']['user'])
+        )
+        print(request.get_json())
         return Response('mention success'), 200
     return Response(), 200
 
